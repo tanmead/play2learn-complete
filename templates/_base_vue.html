@@ -51,7 +51,7 @@
               Me
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">My Account</a>
+              <a class="dropdown-item" href="{% url 'my-account' %}">My Account</a>
               <div class="dropdown-divider"></div>
               <form method="post" action="{% url 'account_logout' %}">
                 {% csrf_token %}
@@ -78,7 +78,7 @@
       <div class="float-end m-1 me-2">Copyright &copy; 2025 Play2Learn.</div>
       <nav>
         <ul class="nav">
-          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'pages:contact-us' %}">Contact</a></li>
           {% if user.is_staff %}
           <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
           {% endif %}

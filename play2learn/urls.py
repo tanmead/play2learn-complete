@@ -23,5 +23,6 @@ urlpatterns = [
     path('games/', include("games.urls")),
 
     # User Management
+    path('account/', include('users.urls')),
     path('account/', include('allauth.urls')),
 ]
