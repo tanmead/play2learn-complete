@@ -1,9 +1,10 @@
 import html
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, CreateView, DetailView
 from django.urls import reverse_lazy
 
 from common.utils.email import send_email
-from .forms import ContactUsForm
+from .forms import ContactUsForm, ReviewForm
+from .models import Review
 
 class HomePageView(TemplateView):
     template_name = 'pages/home.html'
@@ -33,3 +34,12 @@ class ContactUsView(FormView):
 
 class ContactUsThanksView(TemplateView):
     template_name = 'pages/thanks.html'
+
+class CreateReviewView(CreateView):
+    model = Review
+    form_class = ReviewForm
+
+class ReviewDetailView(DetailView):
+    model = Review
+    template_name = 'pages/review_detail.html'
+    context_object_name = 'review'
