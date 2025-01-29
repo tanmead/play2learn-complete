@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'crispy_forms',
+    'crispy_bootstrap5',
 
     # local apps
     "games.apps.GamesConfig",
@@ -49,6 +51,10 @@ INSTALLED_APPS = [
     "users.apps.UsersConfig",
     "common.apps.CommonConfig",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 SITE_ID = 1
 
