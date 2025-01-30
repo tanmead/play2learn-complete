@@ -1,5 +1,5 @@
 import html
-from django.views.generic import TemplateView, FormView, CreateView, DetailView, DeleteView
+from django.views.generic import TemplateView, FormView, CreateView, DetailView, DeleteView, ListView
 from django.urls import reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -10,6 +10,11 @@ from .models import Review
 
 class HomePageView(TemplateView):
     template_name = 'pages/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['reviews'] = Review.objects.all()
+        return context
 
 class ContactUsView(FormView):
     template_name = 'pages/contact_us.html'
@@ -49,6 +54,9 @@ class ReviewDetailView(DetailView):
     model = Review
     template_name = 'pages/review_detail.html'
     context_object_name = 'review'
+
+class ReviewListView(ListView):
+    model = Review
 
 class ReviewDeleteView(UserPassesTestMixin, DeleteView):
     model = Review

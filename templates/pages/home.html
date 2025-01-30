@@ -3,8 +3,28 @@
 {% block title %}Home{% endblock %}
 
 {% block main %}
-  <div class="container">
-    <h1>Home</h1>
+  <div class="container mx-auto w-50 text-center mt-5">
+    <h1>Play2Learn Home</h1>
     <p>Welcome to the home page!</p>
+  </div>
+  <div id="carouselControls" class="carousel slide w-50 mx-auto" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {% for review in reviews %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <div class="text-center p-4">
+          <h5>"{{ review.review }}"</h5>
+          <p>- {{ review.first_name }} {{ review.last_name }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </button>
   </div>
 {% endblock %}

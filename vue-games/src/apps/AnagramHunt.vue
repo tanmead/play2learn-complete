@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="width: 500px">
+  <div class="container" data-record-score-url="{% url 'games:record-score' %}" style="width: 500px">
     <!-- Start Screen -->
     <div v-if="screen=='start'" class="container">
       <div class="row m-auto">
@@ -78,7 +78,7 @@ export default {
     return {
       userName: '',
       score: 0,
-      timeLeft: 60,
+      timeLeft: 10,
       anagrams: anagrams,
       currentWord: "",
       anagramList: [],
@@ -129,6 +129,22 @@ export default {
     async recordScore() {
       // TODO: when Anagram Hunt finishes, make an Ajax call with axios (this.axios)
       // to record the score on the backend
+      const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+      const csrfToken = csrfInput.value;
+      const ajaxURL = '/record-score/';
+      const data = {
+        game: 'Anagram Hunt',
+        gameSettings: {'Word Length': this.wordLength},
+        score: this.score
+      }
+      fetch(ajaxURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify(data)
+      })
     }
   },
   watch: {
