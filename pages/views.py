@@ -1,6 +1,8 @@
 import html
-from django.views.generic import TemplateView, FormView, CreateView, DetailView
+from django.views.generic import TemplateView, FormView, CreateView, DetailView, DeleteView
 from django.urls import reverse_lazy
+
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from common.utils.email import send_email
 from .forms import ContactUsForm, ReviewForm
@@ -35,11 +37,23 @@ class ContactUsView(FormView):
 class ContactUsThanksView(TemplateView):
     template_name = 'pages/thanks.html'
 
-class CreateReviewView(CreateView):
+class CreateReviewView(LoginRequiredMixin, CreateView):
     model = Review
     form_class = ReviewForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class ReviewDetailView(DetailView):
     model = Review
     template_name = 'pages/review_detail.html'
     context_object_name = 'review'
+
+class ReviewDeleteView(UserPassesTestMixin, DeleteView):
+    model = Review
+    success_url = reverse_lazy('pages:homepage')
+
+    def test_func(self):
+        review = self.get_object()
+        return review.user == self.request.user
