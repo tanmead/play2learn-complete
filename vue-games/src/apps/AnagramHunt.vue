@@ -131,20 +131,28 @@ export default {
       // to record the score on the backend
       const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
       const csrfToken = csrfInput.value;
-      const ajaxURL = '/record-score/';
+      const ajaxURL = '/games/record-score/';
       const data = {
         game: 'Anagram Hunt',
-        gameSettings: {'Word Length': this.wordLength},
+        game_settings: { 'Word Length': this.wordLength },
         score: this.score
+      };
+
+      try {
+        // Send the POST request using axios
+        const response = await this.axios.post(ajaxURL, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+          }
+        });
+
+        // Handle the response (optional)
+        console.log('Score recorded successfully:', response.data);
+      } catch (error) {
+        // Handle errors (optional)
+        console.error('Error recording score:', error.response ? error.response.data : error.message);
       }
-      fetch(ajaxURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFToken': csrfToken
-        },
-        body: JSON.stringify(data)
-      })
     }
   },
   watch: {

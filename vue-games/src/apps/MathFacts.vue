@@ -131,7 +131,7 @@ export default {
       number2: 0,
       userInput: "",
       interval: null,
-      timeLeft: 60,
+      timeLeft: 10,
     }
   },
   methods: {
@@ -159,8 +159,32 @@ export default {
       }
     },
     async recordScore() {
-      // TODO: when Math Facts finishes, make an Ajax call with axios (this.axios)
+      // TODO: when Anagram Hunt finishes, make an Ajax call with axios (this.axios)
       // to record the score on the backend
+      const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
+      const csrfToken = csrfInput.value;
+      const ajaxURL = '/games/record-score/';
+      const data = {
+        game: 'Math Facts',
+        game_settings: { 'Operation': this.operation, 'Max Number': this.maxNumber },
+        score: this.score
+      };
+
+      try {
+        // Send the POST request using axios
+        const response = await this.axios.post(ajaxURL, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken
+          }
+        });
+
+        // Handle the response (optional)
+        console.log('Score recorded successfully:', response.data);
+      } catch (error) {
+        // Handle errors (optional)
+        console.error('Error recording score:', error.response ? error.response.data : error.message);
+      }
     }
   },
   computed: {
