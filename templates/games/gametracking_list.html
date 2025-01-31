@@ -1,0 +1,40 @@
+{% extends "_base_vue.html" %}
+
+{% block title %}Game Tracking{% endblock %}
+{% block main %}
+    <div class="row">
+      <div class="text-center">
+        {% if 'math-facts' in request.path %}
+        <h2>Math Facts Tracking</h2>
+        {% else %}
+        <h2>Anagram Hunt Tracking</h2>
+        {% endif %}
+      </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table mx-auto table-striped" style="width: 80%">
+          <thead>
+            <tr>
+                <th>Score</th>
+                <th>Game Settings</th>
+                <th>Completed Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for gametracking in gametracking_list %}
+              <tr>
+                <td>
+                  {{gametracking.score}}
+                </td>
+                <td>
+                  {{gametracking.game_settings}}
+                </td>
+                <td>
+                    {{gametracking.time}}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+{% endblock %}

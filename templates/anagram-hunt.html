@@ -2,6 +2,15 @@
 
 {% block title %}Anagram Hunt{% endblock %}
 {% block main %}
+<div class="text-center">
   <h1>Anagram Hunt</h1>
+  <div>
   {{ block.super }}
-{% endblock %} 
+  </div>
+  {% if request.user.is_authenticated %}
+    <div>
+        <a href="{% url 'games:anagram-hunt-tracking' request.user.username %}">Track your game history!</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,14 +1,31 @@
+import json
+
 from django.shortcuts import render
 from django.http import JsonResponse
-import json
 from .models import GameTracking
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 class MathFactsView(TemplateView):
     template_name = "math-facts.html"
 
 class AnagramHuntView(TemplateView):
     template_name = "anagram-hunt.html"
+
+class GameTrackingListView(ListView):
+    model = GameTracking
+    paginate_by = 10
+    context_object_name = 'gametracking_list'
+
+    def get_queryset(self):
+        qs = GameTracking.objects.filter(user=self.request.user).order_by('-time')
+
+        if "math-facts" in self.request.path:
+            qs = qs.filter(game='Math-Facts')
+
+        elif "anagram-hunt" in self.request.path:
+            qs = qs.filter(game='Anagram Hunt')
+
+        return qs
 
 def record_score(request):
     if request.method == 'POST':

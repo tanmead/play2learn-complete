@@ -2,6 +2,15 @@
 
 {% block title %}Math Facts{% endblock %}
 {% block main %}
+<div class="text-center">
   <h1>Math Facts</h1>
+  <div>
   {{ block.super }}
+  </div>
+  {% if request.user.is_authenticated %}
+    <div>
+        <a href="{% url 'games:math-facts-tracking' request.user.username %}">Track your game history!</a>
+    </div>
+  {% endif %}
+</div>
 {% endblock %}
