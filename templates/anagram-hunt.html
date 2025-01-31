@@ -9,7 +9,8 @@
   </div>
   {% if request.user.is_authenticated %}
     <div>
-        <a href="{% url 'games:anagram-hunt-tracking' request.user.username %}">Track your game history!</a>
+        <a href="{% url 'games:anagram-hunt-tracking' request.user.username %}">Track your game history</a>
+        <a href="{% url 'games:anagram-hunt-leaderboard' %}">Check out the leaderboard</a>
     </div>
   {% endif %}
 </div>

@@ -16,14 +16,29 @@ class GameTrackingListView(ListView):
     paginate_by = 10
     context_object_name = 'gametracking_list'
 
+    def get_template_names(self):
+        if "leaderboard" in self.request.path:
+            return 'games/gametracking_leaderboard.html'
+        return 'games/gametracking_list.html'
+
     def get_queryset(self):
-        qs = GameTracking.objects.filter(user=self.request.user).order_by('-time')
+        if "leaderboard" in self.request.path:
+            qs = GameTracking.objects.all().order_by('-score')
 
-        if "math-facts" in self.request.path:
-            qs = qs.filter(game='Math-Facts')
+            if "math-facts" in self.request.path:
+                qs = qs.filter(game='Math-Facts')
 
-        elif "anagram-hunt" in self.request.path:
-            qs = qs.filter(game='Anagram Hunt')
+            elif "anagram-hunt" in self.request.path:
+                qs = qs.filter(game='Anagram Hunt')
+
+        else:
+            qs = GameTracking.objects.filter(user=self.request.user).order_by('-time')
+
+            if "math-facts" in self.request.path:
+                qs = qs.filter(game='Math-Facts')
+
+            elif "anagram-hunt" in self.request.path:
+                qs = qs.filter(game='Anagram Hunt')
 
         return qs
 
