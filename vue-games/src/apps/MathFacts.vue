@@ -131,7 +131,7 @@ export default {
       number2: 0,
       userInput: "",
       interval: null,
-      timeLeft: 10,
+      timeLeft: 60,
     }
   },
   methods: {

@@ -10,6 +10,8 @@
   {% if request.user.is_authenticated %}
     <div>
         <a href="{% url 'games:math-facts-tracking' request.user.username %}">Track your game history</a>
+    </div>
+    <div>
         <a href="{% url 'games:math-facts-leaderboard' %}">Check out the leaderboard</a>
     </div>
   {% endif %}

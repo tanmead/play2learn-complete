@@ -78,7 +78,7 @@ export default {
     return {
       userName: '',
       score: 0,
-      timeLeft: 10,
+      timeLeft: 60,
       anagrams: anagrams,
       currentWord: "",
       anagramList: [],

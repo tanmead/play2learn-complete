@@ -26,7 +26,7 @@ class GameTrackingListView(ListView):
             qs = GameTracking.objects.all().order_by('-score')
 
             if "math-facts" in self.request.path:
-                qs = qs.filter(game='Math-Facts')
+                qs = qs.filter(game='Math Facts')
 
             elif "anagram-hunt" in self.request.path:
                 qs = qs.filter(game='Anagram Hunt')
